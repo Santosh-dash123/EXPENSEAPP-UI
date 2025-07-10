@@ -1,0 +1,49 @@
+<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+    <div class="card card0 border-0 shadow-lg">
+      <div class="row d-flex">
+        <div class="col-lg-6">
+          <div class="card1 pb-5 d-flex align-items-center justify-content-center">
+            <img src="https://2.bp.blogspot.com/-2TZJ3M9sSx4/Vs7gZnFNwgI/AAAAAAAABUM/v3R88LMR0Zc/s1600/login.png" class="logo img-fluid" style="max-height: 250px;">
+          </div>
+          <div class="d-flex justify-content-center align-items-center">
+            <h3 style="color: #3597dc;">Room Expense Tracker</h3>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card2 card border-0 px-4 py-5">
+            <div class="row px-3 mb-4">
+              <h3 class="font-weight-bold">Login</h3>
+            </div>
+            <div class="row px-3">
+              <label class="mb-1">
+                <h6 class="mb-0 text-sm">Email Address/Phone Number</h6>
+              </label>
+              <input class="mb-4 form-control" type="text" placeholder="Enter a valid email address/phone number" [(ngModel)]="loginUser.email" name="email">
+              <span class="text-danger" style="margin-top: -20px;" *ngIf="emailEmpty">{{ emailEmpty }}</span>
+            </div>
+            <div class="row px-3">  
+              <label class="mb-1">
+                <h6 class="mb-0 text-sm">Password</h6>
+              </label>
+              <input class="form-control mb-4" type="password" placeholder="Enter password" [(ngModel)]="loginUser.password" name="password">
+              <span class="text-danger" style="margin-top: -20px;" *ngIf="passwordEmpty">{{ passwordEmpty }}</span>
+            </div>
+            <div class="row px-3 mb-4">
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input id="chk1" type="checkbox" class="custom-control-input">
+                <label for="chk1" class="custom-control-label text-sm">Remember me</label>
+              </div>
+            </div>
+            <div class="row mb-3">
+             <div class="col-md-3">
+               <button type="button" class="btn btn-danger btn-block text-center" (click)="login()">Login</button>
+             </div>
+            </div>
+            <div class="row px-3 text-danger" *ngIf="loginError">
+              {{ loginError }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

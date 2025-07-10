@@ -1,0 +1,31 @@
+#wrapper {
+  min-height: 100vh;
+  display: flex;
+}
+
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background-color: #343a40;
+  position: fixed;
+}
+
+.sidebar .nav-link {
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #495057;
+  text-decoration: none;
+}
+
+.flex-grow-1 {
+  margin-left: 220px; // To push the content next to sidebar
+}
+
+.active {
+  font-weight: bold;
+  color: yellow !important;
+}

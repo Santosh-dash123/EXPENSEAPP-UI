@@ -1,0 +1,25 @@
+<div class="container mt-4">
+  <h3 class="mb-4">Room List</h3>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Address</th>
+        <th>Rent Date</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let room of rooms">
+        <td>{{ room.name }}</td>
+        <td>
+          <img [src]="room.image" alt="Room Image" width="100" height="70" *ngIf="room.image">
+        </td>
+        <td>{{ room.address }}</td>
+        <td>{{ room.rentDate | date:'dd-MM-yyyy' }}</td>
+        <td>{{ room.ammount | currency:'INR' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
