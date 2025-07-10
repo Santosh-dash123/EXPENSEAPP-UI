@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between mb-3">
+    <h3>Room List</h3>
+    <button class="btn btn-primary" (click)="navigateToAddRoom()">Add Room</button>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Address</th>
+        <th>Rent Date</th>
+        <th>Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let room of rooms">
+        <td>{{ room.name }}</td>
+        <td>
+          <img [src]="room.image" alt="Room Image" width="100" height="70" *ngIf="room.image">
+        </td>
+        <td>{{ room.address }}</td>
+        <td>{{ room.rentDate | date:'dd-MM-yyyy' }}</td>
+        <td>{{ room.ammount | currency:'INR' }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="editRoom(room.id)">Edit</button> &nbsp;
+          <button class="btn btn-sm btn-danger" (click)="deleteRoom(room.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
