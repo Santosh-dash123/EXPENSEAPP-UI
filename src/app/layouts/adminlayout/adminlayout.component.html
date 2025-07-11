@@ -16,9 +16,26 @@
       <li class="nav-item">
         <a class="nav-link text-white" routerLink="/admin/dashboard" routerLinkActive="active">📊 Dashboard</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white" routerLink="/admin/rooms" routerLinkActive="active">🏠 Room Master</a>
-      </li>
+     <!-- Master Menu (Collapsible) -->
+        <li class="nav-item">
+          <a class="nav-link text-white d-flex justify-content-between align-items-center"
+            (click)="toggleMasterMenu();  $event.preventDefault()"
+            [attr.aria-expanded]="isMasterMenuOpen"
+            aria-controls="masterSubmenu">
+            🗂️ Master
+            <i class="bi" [ngClass]="isMasterMenuOpen ? 'bi-caret-up-fill' : 'bi-caret-down-fill'"></i>
+          </a>
+
+          <ul id="masterSubmenu"
+              class="nav flex-column ms-3"
+              [ngClass]="{'collapse': !isMasterMenuOpen, 'show': isMasterMenuOpen}">
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="/admin/rooms" routerLinkActive="active">
+                🏠 Room Master
+              </a>
+            </li>
+          </ul>
+        </li>
     </ul>
   </div>
 

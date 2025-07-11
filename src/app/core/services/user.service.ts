@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiResponse } from '../models/api-response.model';
 import { User } from '../models/user.model';
+import { AppConstants } from '../constants/common.model';
 
 @Injectable({ providedIn: 'root' })
 
@@ -10,7 +11,7 @@ export class UserService{
     private _userName = new BehaviorSubject<string | null>(localStorage.getItem('userName'));
     private _userType = new BehaviorSubject<number | null>(Number(localStorage.getItem('userType')));
 
-    private baseUrl = 'https://localhost:7020';
+    private baseUrl = AppConstants.API_BASE_URL;
 
     constructor(private http: HttpClient) { }
 

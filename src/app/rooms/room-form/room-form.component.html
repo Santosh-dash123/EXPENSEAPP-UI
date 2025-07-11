@@ -12,9 +12,19 @@
         </div>
         <div class="col-md-6">
           <label class="form-label">Image</label><span class="text-danger">*</span>
-          <input type="file" class="form-control" disabled placeholder="Upload Image">
-          <span class="text-muted">* Upload image feature will be handled later</span>
+          <div class="input-group">
+            <input type="file" class="form-control" (change)="onFileChange($event)">
+            <button
+              type="button"
+              *ngIf="isEditMode && roomForm.get('image')?.value"
+              class="btn btn-secondary"
+              (click)="viewImage(roomForm.get('image')?.value)">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+          <span class="text-danger" *ngIf="formErrors.image">{{ formErrors.image }}</span>
         </div>
+
       </div>
 
       <div class="mb-3">
@@ -41,5 +51,23 @@
         <button type="button" class="btn btn-secondary" (click)="navigateToListPage()">Cancel</button>
       </div>
     </form>
+  </div>
+</div>
+
+
+<!-- Image View Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">Room Image</h5>
+        <button type="button" class="btn" data-dismiss="modal" aria-label="Close" style="margin-left: auto; background: none; border: none;">
+          <i class="bi bi-x-lg fs-5"></i>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <img [src]="selectedImageUrl" class="img-fluid rounded" alt="Room Image">
+      </div>
+    </div>
   </div>
 </div>

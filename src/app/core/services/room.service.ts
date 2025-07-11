@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../models/api-response.model';
 import { Room } from '../models/room.model';
+import { AppConstants } from '../constants/common.model';
 
 @Injectable({ providedIn: 'root' })
 export class RoomService {
-  private baseUrl = 'https://localhost:7020';
+  private baseUrl = AppConstants.API_BASE_URL;
 
   constructor(private http: HttpClient) { }
 
@@ -19,12 +20,12 @@ export class RoomService {
     return this.http.get<Room>(`${this.baseUrl}/GetParticularRoom/${id}`);
   }
 
-  addRoom(room: Partial<Room>): Observable<ApiResponse<Room>> {
-    return this.http.post<ApiResponse<Room>>(`${this.baseUrl}/AddRooms`, room);
+  addRoom(formData: FormData): Observable<ApiResponse<Room>> {
+    return this.http.post<ApiResponse<Room>>(`${this.baseUrl}/AddRooms`, formData);
   }
 
-  updateRoom(room: Room): Observable<ApiResponse<Room>> {
-    return this.http.post<ApiResponse<Room>>(`${this.baseUrl}/UpdateRoom`, room);
+  updateRoom(formData: FormData): Observable<ApiResponse<Room>> {
+    return this.http.post<ApiResponse<Room>>(`${this.baseUrl}/UpdateRoom`, formData);
   }
 
   deleteRoom(id: number): Observable<ApiResponse<boolean>> {
