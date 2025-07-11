@@ -7,23 +7,23 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-room-form',
-  imports: [ReactiveFormsModule,CommonModule,ActivatedRoute],
+  imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './room-form.component.html',
   styleUrl: './room-form.component.scss'
 })
 export class RoomFormComponent implements OnInit {
   roomForm!: FormGroup;
   roomId: number | null = null;
+  isEditMode = false;
 
-  constructor(private router: Router,
-    private fb:FormBuilder,
-    private route:ActivatedRoute,
-    private roomservice:RoomService
-  ){
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private roomservice: RoomService
+  ) {}
 
-  }
-
-   formErrors = {
+  formErrors = {
     name: '',
     address: '',
     rentDate: '',
@@ -32,61 +32,63 @@ export class RoomFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.roomForm = this.fb.group({
+      id:[0],
       name: ['', Validators.required],
-      image: ['assets/images/abc.jpg'], 
+      image: ['assets/images/abc.jpg'], // default image
       address: ['', Validators.required],
       rentDate: ['', Validators.required],
       ammount: [0, [Validators.required, Validators.min(1)]]
-    })
+    });
 
-    //For get specific room data
+    // Detect mode
     this.route.paramMap.subscribe(params => {
-    const idParam = params.get('id');
-    if (idParam) {
-      this.roomId = +idParam;
-      this.loadRoomData(this.roomId);
-    }
-  });
+      const idParam = params.get('id');
+      if (idParam) {
+        this.isEditMode = true;
+        this.roomId = +idParam;
+        this.loadRoomData(this.roomId);
+      }
+    });
   }
 
+  //First on edit button click call this method
   loadRoomData(id: number): void {
-  this.roomservice.getRoomById(id).subscribe({
-    next: (room) => {
-      this.roomForm.patchValue({
-        name: room.name,
-        image: room.image,
-        address: room.address,
-        rentDate: room.rentDate,
-        ammount: room.ammount
-      });
-    },
-    error: (err) => {
-      console.error('Failed to fetch room details', err);
-      alert('Failed to fetch room details.');
-    }
-  });
-}
+    this.roomservice.getRoomById(id).subscribe({
+      next: (room) => {
+        const formattedDate = room.rentDate ? room.rentDate.split('T')[0] : '';
+        this.roomForm.patchValue({
+          id: room.id,
+          name: room.name,
+          image: room.image,
+          address: room.address,
+          rentDate: formattedDate,
+          ammount: room.ammount
+        });
+      },
+      error: (err) => {
+        console.error('Failed to fetch room details', err);
+        alert('Failed to fetch room details.');
+      }
+    });
+  }
 
+  //This method for handle both add and edit operation 
   onRoomSubmit() {
     this.validateForm();
-    if (this.roomForm.invalid) {
-      return;
-    }
+    if (this.roomForm.invalid) return;
 
-     const roomData: Room = {
-        id: this.roomId ?? 0, // use 0 if creating
-        ...this.roomForm.value
-      };
+    const roomData: Room = {
+      id: this.roomId ?? 0,
+      ...this.roomForm.value
+    };
 
-    if (this.roomId) {
+    if (this.isEditMode) {
       this.roomservice.updateRoom(roomData).subscribe({
         next: () => {
           alert('Room updated successfully!');
           this.router.navigate(['/admin/rooms']);
         },
-        error: () => {
-          alert('Failed to update room.');
-        }
+        error: () => alert('Failed to update room.')
       });
     } else {
       this.roomservice.addRoom(roomData).subscribe({
@@ -94,14 +96,13 @@ export class RoomFormComponent implements OnInit {
           alert('Room created successfully!');
           this.router.navigate(['/admin/rooms']);
         },
-        error: () => {
-          alert('Failed to create room.');
-        }
+        error: () => alert('Failed to create room.')
       });
     }
   }
 
-   validateForm() {
+  //Validation Method for validate all the field
+  validateForm() {
     this.formErrors = {
       name: '',
       address: '',
@@ -109,25 +110,21 @@ export class RoomFormComponent implements OnInit {
       ammount: '',
     };
 
-    if (this.roomForm.controls['name'].invalid) {
+    if (this.roomForm.controls['name'].invalid)
       this.formErrors.name = 'Room Name is required';
-    }
 
-    if (this.roomForm.controls['address'].invalid) {
+    if (this.roomForm.controls['address'].invalid)
       this.formErrors.address = 'Address is required';
-    }
 
-    if (this.roomForm.controls['rentDate'].invalid) {
+    if (this.roomForm.controls['rentDate'].invalid)
       this.formErrors.rentDate = 'Rent Date is required';
-    }
 
-    if (this.roomForm.controls['ammount'].invalid) {
+    if (this.roomForm.controls['ammount'].invalid)
       this.formErrors.ammount = 'Amount must be greater than 0';
-    }
   }
 
-  navigateToListPage()
-  {
+  navigateToListPage() {
     this.router.navigate(['/admin/rooms']);
   }
 }
+

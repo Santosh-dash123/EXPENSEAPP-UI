@@ -1,12 +1,13 @@
 <div class="container-fluid">
   <div class="card shadow rounded p-4">
-    <h3 class="mb-4">Add Room</h3>
+    <h3 class="mb-4">{{ isEditMode ? 'Edit Room' : 'Add Room' }}</h3>
 
     <form [formGroup]="roomForm" (ngSubmit)="onRoomSubmit()">
       <div class="row mb-3">
         <div class="col-md-6">
           <label class="form-label">Room Name</label>
           <input type="text" class="form-control" formControlName="name" placeholder="Enter room name">
+          <input type="hidden" class="form-control" formControlName="id"/>
           <span class="text-danger" *ngIf="formErrors.name">{{ formErrors.name }}</span>
         </div>
         <div class="col-md-6">
@@ -36,7 +37,7 @@
       </div>
 
       <div class="d-flex justify-content-between">
-        <button type="submit" class="btn btn-primary">Save Room</button>
+        <button type="submit" class="btn btn-primary">{{isEditMode ? 'Edit Room' : 'Save Room'}}</button>
         <button type="button" class="btn btn-secondary" (click)="navigateToListPage()">Cancel</button>
       </div>
     </form>
