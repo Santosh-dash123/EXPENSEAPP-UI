@@ -5,32 +5,32 @@
     <form [formGroup]="roomForm" (ngSubmit)="onRoomSubmit()">
       <div class="row mb-3">
         <div class="col-md-6">
-          <label class="form-label">Room Name</label>
+          <label class="form-label">Room Name</label><span class="text-danger">*</span>
           <input type="text" class="form-control" formControlName="name" placeholder="Enter room name">
           <input type="hidden" class="form-control" formControlName="id"/>
           <span class="text-danger" *ngIf="formErrors.name">{{ formErrors.name }}</span>
         </div>
         <div class="col-md-6">
-          <label class="form-label">Image</label>
+          <label class="form-label">Image</label><span class="text-danger">*</span>
           <input type="file" class="form-control" disabled placeholder="Upload Image">
           <span class="text-muted">* Upload image feature will be handled later</span>
         </div>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Address</label>
+        <label class="form-label">Address</label><span class="text-danger">*</span>
         <textarea class="form-control" rows="3" formControlName="address" placeholder="Enter address"></textarea>
         <span class="text-danger" *ngIf="formErrors.address">{{ formErrors.address }}</span>
       </div>
 
       <div class="row mb-3">
         <div class="col-md-6">
-          <label class="form-label">Rent Date</label>
+          <label class="form-label">Rent Date</label><span class="text-danger">*</span>
           <input type="date" class="form-control" formControlName="rentDate">
           <span class="text-danger" *ngIf="formErrors.rentDate">{{ formErrors.rentDate }}</span>
         </div>
         <div class="col-md-6">
-          <label class="form-label">Amount</label>
+          <label class="form-label">Amount</label><span class="text-danger">*</span>
           <input type="number" class="form-control" formControlName="ammount" placeholder="₹ 0.00">
           <span class="text-danger" *ngIf="formErrors.ammount">{{ formErrors.ammount }}</span>
         </div>

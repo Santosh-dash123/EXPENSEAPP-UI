@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RoomListComponent {
   rooms: Room[] = [];
+  isDelete = false ;
 
     constructor(private roomService: RoomService,
       private router: Router
@@ -32,8 +33,23 @@ export class RoomListComponent {
     editRoom(id: number): void {
       this.router.navigate(['/admin/rooms/edit', id]);
     } 
-    deleteRoom(id:any)
-    {
-
+    deleteRoom(id: number): void {
+      if (id != null && id !== 0) {
+        const confirmDelete = confirm("Are you sure to delete this room?");
+        if (confirmDelete) {
+          this.roomService.deleteRoom(id).subscribe({
+            next: (value) => {
+              if (value.data === true) {
+                alert(value.statusMessage);
+                this.ngOnInit(); 
+              }
+            },
+            error: (error) => {
+              alert("Error deleting room: " + error.statusMessage);
+            }
+          });
+        }
+      }
     }
+
 }
