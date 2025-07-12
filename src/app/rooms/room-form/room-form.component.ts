@@ -6,6 +6,7 @@ import { Room } from '../../core/models/room.model';
 import { CommonModule } from '@angular/common';
 import { AppConstants } from '../../core/constants/common.model';
 import Swal from 'sweetalert2';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-room-form',
@@ -19,12 +20,14 @@ export class RoomFormComponent implements OnInit {
   isEditMode = false;
   selectedImageFile! : File;
   selectedImageUrl: string = '';
+  userId: number|null = null;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private roomservice: RoomService
+    private roomservice: RoomService,
+    private userservice: UserService
   ) {}
 
   formErrors = {
@@ -94,9 +97,19 @@ export class RoomFormComponent implements OnInit {
   onRoomSubmit() {
     this.validateForm();
     if (this.roomForm.invalid) return;
-
+    this.userservice.userId$.subscribe({
+        next: (id) => {
+          if (id !== null) {
+            this.userId = id;
+          }
+        },
+        error: (err) => {
+          console.error("Error getting user ID:", err);
+        }
+      });
     const formData = new FormData();
     formData.append("Id",this.roomForm.value.id.toString());
+    formData.append("RoomOwnerId",this.userId != null ? this.userId.toString() : "");
     formData.append("Name",this.roomForm.value.name.toString());
     formData.append("Address",this.roomForm.value.address.toString());
     formData.append("RentDate",this.roomForm.value.rentDate.toString());

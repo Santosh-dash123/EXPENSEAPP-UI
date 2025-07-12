@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AppConstants } from '../../core/constants/common.model';
 import Swal from 'sweetalert2';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-room-list',
@@ -16,17 +17,33 @@ export class RoomListComponent {
   selectedImageUrl:string = '';
   rooms: Room[] = [];
   isDelete = false ;
+  userId : number | null = null;
 
     constructor(private roomService: RoomService,
-      private router: Router
+      private router: Router,
+      private userService: UserService
     ) {}
 
+
     ngOnInit(): void {
-      this.roomService.getRooms().subscribe({
-        next: (data) => this.rooms = data,
-        error: (err) => console.error('Error fetching rooms:', err)
+      this.userService.userId$.subscribe({
+        next: (id) => {
+          if (id !== null) {
+            this.userId = id;
+            this.roomService.getRooms(this.userId).subscribe({
+              next: (data) => this.rooms = data,
+              error: (err) => console.error('Error fetching rooms:', err)
+            });
+          } else {
+            console.warn("User ID is null, cannot fetch rooms.");
+          }
+        },
+        error: (err) => {
+          console.error("Error getting user ID:", err);
+        }
       });
     }
+
 
     navigateToAddRoom()
     {

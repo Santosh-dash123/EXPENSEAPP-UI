@@ -75,6 +75,7 @@ export class LoginComponent {
           const userType = res.data.userType;
           this.userService.setUserType(res.data.userType);
           this.userService.setUserName(res.data.name);
+          this.userService.setUserId(res.data.userType);
 
           if (userType === 1) {
             this.router.navigate(['/admin/dashboard']);

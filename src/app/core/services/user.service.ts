@@ -10,6 +10,7 @@ import { AppConstants } from '../constants/common.model';
 export class UserService{
     private _userName = new BehaviorSubject<string | null>(localStorage.getItem('userName'));
     private _userType = new BehaviorSubject<number | null>(Number(localStorage.getItem('userType')));
+    private _userId = new BehaviorSubject<number | null>(Number(localStorage.getItem('userId')));
 
     private baseUrl = AppConstants.API_BASE_URL;
 
@@ -32,6 +33,17 @@ export class UserService{
         this._userName.next(name);
     }
 
+     get userId$(): Observable<number | null> {
+        debugger;
+        return this._userId.asObservable();
+    }
+
+    setUserId(name: number) {
+        debugger;
+        localStorage.setItem('userId', name.toString());
+        this._userId.next(name);
+    }
+
     get userType$(): Observable<number | null> {
         return this._userType.asObservable();
     }
@@ -44,6 +56,7 @@ export class UserService{
     clearUser() {
         localStorage.removeItem('userName');
         localStorage.removeItem('userType');
+        localStorage.removeItem('userId');
         this._userName.next(null);
     }
 }
