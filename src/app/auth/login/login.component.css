@@ -1,3 +1,6 @@
+    html {
+  height: 100%;
+}
     body {
       color: #000;
       overflow-x: hidden;
@@ -21,7 +24,7 @@
     .text-sm {
       font-size: 14px !important
     }
-    ::placeholder {
+    /* ::placeholder {
       color: #BDBDBD;
       opacity: 1;
       font-weight: 300
@@ -33,7 +36,7 @@
     ::-ms-input-placeholder {
       color: #BDBDBD;
       font-weight: 300
-    }
+    } */
     input,
     textarea {
       padding: 10px 12px 10px 12px;

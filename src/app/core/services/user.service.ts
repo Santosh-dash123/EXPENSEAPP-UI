@@ -17,29 +17,28 @@ export class UserService{
     constructor(private http: HttpClient) { }
 
     CheckLogin(user : Partial<User>): Observable<ApiResponse<User>> {
-        debugger;
         return this.http.post<ApiResponse<User>>(`${this.baseUrl}/CheckLogin`,user);
+    }
+
+    userRegistration(user: User): Observable<ApiResponse<User>> {
+        return this.http.post<ApiResponse<User>>(`${this.baseUrl}/AddUser`, user);
     }
 
     //Code for store data user name or anything in localstorage
     get userName$(): Observable<string | null> {
-        debugger;
         return this._userName.asObservable();
     }
 
     setUserName(name: string) {
-        debugger;
         localStorage.setItem('userName', name);
         this._userName.next(name);
     }
 
      get userId$(): Observable<number | null> {
-        debugger;
         return this._userId.asObservable();
     }
 
     setUserId(name: number) {
-        debugger;
         localStorage.setItem('userId', name.toString());
         this._userId.next(name);
     }

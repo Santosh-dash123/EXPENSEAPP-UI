@@ -4,9 +4,11 @@ import { AdminlayoutComponent } from './layouts/adminlayout/adminlayout.componen
 import { RoomFormComponent } from './rooms/room-form/room-form.component';
 import { RoomListComponent } from './rooms/room-list/room-list.component';
 import { AdmindashboardComponent } from './dashboard/admindashboard/admindashboard.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
+    { path: 'registration', component: RegistrationComponent },
     { path: 'admin', component: AdminlayoutComponent,
         children: [
         {path : 'dashboard',component:AdmindashboardComponent},
