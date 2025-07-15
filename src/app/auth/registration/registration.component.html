@@ -19,8 +19,9 @@
           </div>
 
           <div class="col-md-6">
-            <label class="form-label">Email Address <span class="text-danger">*</span></label>
-            <input type="email" class="form-control" [(ngModel)]="user.email" name="email" placeholder="Enter your email">
+            <label class="form-label">Email Address <span class="text-danger">*</span></label><button [style.visibility]="isEmailVerified ? 'hidden' : 'visible'"  class="btn btn-sm btn-secondary" (click)="sendOtp()" style="margin-left: 65px;" >Verify Email</button>
+            <input type="email" class="form-control" [(ngModel)]="user.email" (ngModelChange)="onEmailChange()" name="email" placeholder="Enter your email">
+            <label class="text-success" *ngIf="isEmailVerified">✔ Email Verified</label>
             <label class="text-danger" *ngIf="errors.email">{{ errors.email }}</label>
           </div>
 
@@ -64,6 +65,29 @@
             <a routerLink="/login" class="text-primary">Login</a>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- OTP Modal -->
+<div class="modal" tabindex="-1" [ngClass]="{'show d-block': showOtpModal}" style="background-color: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Verify Email</h5>
+         <button type="button" class="btn" data-dismiss="modal" aria-label="Close" style="margin-left: auto; background: none; border: none;">
+          <i class="bi bi-x-lg fs-5"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="otp" class="form-label">Enter OTP sent to your email</label>
+        <input type="text" maxlength="4" [(ngModel)]="otpRequest.otp" class="form-control" placeholder="Enter 4-digit OTP" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="verifyOtp()">Verify OTP</button>
+        <button class="btn btn-link" (click)="sendOtp()">Resend OTP</button>
       </div>
     </div>
   </div>

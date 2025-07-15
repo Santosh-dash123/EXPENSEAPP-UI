@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../core/models/user.model';
 import { UserService } from '../../core/services/user.service';
 import Swal from 'sweetalert2';
+import { emailverification } from '../../core/models/emailverification.model';
+import { HelperService } from '../../core/services/helper.service';
 
 @Component({
   selector: 'app-registration',
@@ -19,6 +21,10 @@ import Swal from 'sweetalert2';
 export class RegistrationComponent implements OnInit {
     roomOwners: getroomownerdto[] = [];
     userTypes: usertype[] = [];
+
+    isEmailVerified: boolean = false;
+    showOtpModal:boolean = false;
+    otpRequest: emailverification = {email : '', otp : ''};
 
     //Form - Bound Object
     user:User = {
@@ -34,7 +40,7 @@ export class RegistrationComponent implements OnInit {
     //Variable For Handle All Errors
     errors:any={};
 
-    constructor(private masterService:MasterService,private userService:UserService,private router:Router)
+    constructor(private masterService:MasterService,private userService:UserService,private helperService:HelperService,private router:Router)
     {
 
     }
@@ -68,6 +74,70 @@ export class RegistrationComponent implements OnInit {
       })
     }
 
+    //Code For Reset Email
+    onEmailChange(): void {
+      this.isEmailVerified = false;
+    }
+
+    //Send OTP Code
+    sendOtp(): void {
+      if (!this.user.email) {
+        this.errors.email = 'Email is required before verification!';
+        return;
+      }
+
+      this.otpRequest.email = this.user.email;
+
+      this.helperService.sendOtp(this.otpRequest).subscribe({
+        next: (res) => {
+          Swal.fire('Success', res.statusMessage || 'OTP sent to your email.', 'success');
+          this.otpRequest.otp = '';
+          this.showOtpModal = true;
+        },
+        error: (err) => {
+          Swal.fire('Error', err.error?.statusMessage || 'Failed to send OTP', 'error');
+        }
+      });
+    }
+
+    //Verify OTP Code
+    verifyOtp(): void {
+      this.helperService.verifyOtp(this.otpRequest).subscribe({
+        next: (res) => {
+          if(res.statusMessage == 'No active OTP found!')
+          {
+            Swal.fire('error', res.statusMessage || 'Email verification failed!', 'error');
+            this.isEmailVerified = false;
+            this.showOtpModal = true;
+          }
+          else if(res.statusMessage == 'OTP has expired!')
+          {
+            Swal.fire('error', res.statusMessage || 'Email verification failed!', 'error');
+            this.isEmailVerified = false;
+            this.showOtpModal = true;
+          }
+          else if(res.statusMessage == 'Invalid OTP!')
+          {
+            Swal.fire('error', res.statusMessage || 'Email verification failed!', 'error');
+            this.isEmailVerified = false;
+            this.showOtpModal = true;
+          }
+          else
+          {
+            Swal.fire('success', res.statusMessage || 'Email verification success!', 'success');
+            this.isEmailVerified = true;
+            this.errors.email = '';
+            this.showOtpModal = false;
+          }
+        },
+        error: (err) => {
+          Swal.fire('Error', err.error?.statusMessage || 'Invalid or expired OTP', 'error');
+        }
+      });
+    }
+
+
+
     //Method For Register User
     register():void
     {
@@ -82,6 +152,11 @@ export class RegistrationComponent implements OnInit {
         this.errors.email = 'Give Valid Email Address!';
       } 
       if (!this.user.email) this.errors.email = 'Email is required!';
+      if (!this.isEmailVerified)
+      {
+        Swal.fire('Verification Required', 'Please verify your email before registration!', 'warning');
+        return;
+      }
       if (!phoneRegex.test(this.user.phoneNumber)) {
         this.errors.phoneNumber = 'Give Valid Phone Number!';
       }
