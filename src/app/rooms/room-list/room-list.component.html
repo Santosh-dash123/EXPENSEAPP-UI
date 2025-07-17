@@ -6,6 +6,7 @@
   <table class="table table-bordered table-striped">
     <thead class="table-dark">
       <tr>
+        <th>Sl.No</th>
         <th>Name</th>
         <th>Image</th>
         <th>Address</th>
@@ -15,7 +16,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let room of rooms">
+      <tr *ngFor="let room of rooms; let i = index">
+        <td>{{i+1}}</td>
         <td>{{ room.name }}</td>
         <td>
            <button class="btn btn-sm btn-info me-2" (click)="viewImage(room.image)">

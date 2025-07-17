@@ -6,6 +6,7 @@ import { worktypemst } from '../models/worktypemst.model';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '../models/api-response.model';
 import { usertype } from '../models/usertype.model';
+import { roomDto } from '../models/roomDto.model';
 
 @Injectable({providedIn:'root'})
 export class MasterService{
@@ -24,5 +25,9 @@ export class MasterService{
     getUserType():Observable<ApiResponse<usertype[]>>{
         debugger;
         return this.http.get<ApiResponse<usertype[]>>(`${this.baseUrl}/GetUserType`);
+    }
+    getAllRooms(roomOwnerId:number):Observable<ApiResponse<roomDto[]>>{
+        debugger;
+        return this.http.get<ApiResponse<roomDto[]>>(`${this.baseUrl}/GetAllRoom/${roomOwnerId}`)
     }
 }

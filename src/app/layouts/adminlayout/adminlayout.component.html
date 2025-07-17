@@ -35,6 +35,15 @@
               </a>
             </li>
           </ul>
+          <ul id="masterSubmenu"
+              class="nav flex-column ms-3"
+              [ngClass]="{'collapse': !isMasterMenuOpen, 'show': isMasterMenuOpen}">
+            <li class="nav-item">
+              <a class="nav-link text-white" routerLink="/admin/members" routerLinkActive="active">
+                🏠 Member Master
+              </a>
+            </li>
+          </ul>
         </li>
     </ul>
   </div>

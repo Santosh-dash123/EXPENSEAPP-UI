@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between mb-3">
+    <h3>Members List</h3>
+    <button class="btn btn-primary" (click)="navigateToAddMembers()">Add Members</button>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Sl. No</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Gender</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Job/College Name</th>
+        <th>Company/Course Name</th>
+        <th>Room Name</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="membersList && membersList.length > 0; else noData">
+      <tr *ngFor="let member of membersList; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ member.name }}</td>
+        <td>
+          <button class="btn btn-sm btn-info me-2" (click)="viewImage(member.profilePicture!)">
+              <i class="bi bi-eye"></i> View
+           </button>
+        </td>
+        <td>{{ member.gender }}</td>
+        <td>{{ member.email }}</td>
+        <td>{{ member.phoneNumber }}</td>
+        <td>{{ member.jobName }}</td>
+        <td>{{ member.companyName }}</td>
+        <td>{{ member.roomName }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noData>
+    <tr>
+      <td colspan="10" class="text-center">No members found.</td>
+    </tr>
+  </ng-template>
+</div>
+
+
+<!-- Image View Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">Member Image</h5>
+        <button type="button" class="btn" data-dismiss="modal" aria-label="Close" style="margin-left: auto; background: none; border: none;">
+          <i class="bi bi-x-lg fs-5"></i>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <img [src]="selectedImageUrl" class="img-fluid" alt="Member Image">
+      </div>
+    </div>
+  </div>
+</div>
