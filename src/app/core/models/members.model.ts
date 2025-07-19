@@ -7,7 +7,7 @@ export interface Members {
   adharCard?: File | null;    
   fatherName?: string;
   image?: File | null;        
-  joiningDate?: Date;        
+  joiningDate?: string;        
   address?: string;
   email?: string;
   phoneNumber?: string;

@@ -9,21 +9,26 @@
         <div class="card shadow rounded p-4">
           <div class="card-header d-flex justify-content-between align-items-center text-white" style="background-color: #35354e;">
             <h5 class="m-0">Member {{ i + 1 }}</h5>
-            <button class="btn btn-sm btn-danger" (click)="removeMember(i)" type="button" *ngIf="members.length > 1">Remove</button>
+            <span>
+              <button class="btn btn-sm btn-secondary"  (click)="clearAllField(i)" type="button" style="cursor: pointer;">Clear All</button> &nbsp;
+              <button class="btn btn-sm btn-danger" (click)="removeMember(i)" type="button" *ngIf="members.length > 1">Remove</button>
+            </span>
           </div>
 
           <div class="card-body row g-3">
             <div class="col-md-6">
               <label class="form-label">Room</label>
               <select class="form-control" [(ngModel)]="member.roomId" name="roomId{{i}}">
-                <option value="0" selected>Select Room</option>
+                <option value="0">Select Room</option>
                 <option *ngFor="let room of rooms" [value]="room.id">{{room.name}}</option>
               </select>
+              <label class="text-danger" *ngIf="validateErrors[i]?.['roomId']">{{validateErrors[i]?.['roomId']}}</label>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Name</label>
               <input type="text" class="form-control" [(ngModel)]="member.name" name="name{{i}}" />
+              <label class="text-danger" *ngIf="validateErrors[i]?.['name']">{{validateErrors[i]?.['name']}}</label>
             </div>
 
             <div class="col-md-6">
@@ -34,41 +39,49 @@
                 <option value="Female">Female</option>
                 <option value="Others">Others</option>
               </select>
+              <label class="text-danger" *ngIf="validateErrors[i]?.['gender']">{{validateErrors[i]?.['gender']}}</label>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Father's Name</label>
               <input type="text" class="form-control" [(ngModel)]="member.fatherName" name="fatherName{{i}}" />
+              <label class="text-danger" *ngIf="validateErrors[i]?.['fatherName']">{{validateErrors[i]?.['fatherName']}}</label>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Adhar Card</label>
               <input type="file" class="form-control" (change)="onFileChange($event, i, 'adharCard')" />
+              <label class="text-danger" *ngIf="validateErrors[i]?.['adharCard']">{{validateErrors[i]?.['adharCard']}}</label>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Image</label>
               <input type="file" class="form-control" (change)="onFileChange($event, i, 'image')" />
+              <label class="text-danger" *ngIf="validateErrors[i]?.['image']">{{validateErrors[i]?.['image']}}</label>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Joining Date</label>
               <input type="date" class="form-control" [(ngModel)]="member.joiningDate" name="joiningDate{{i}}" />
+              <label class="text-danger" *ngIf="validateErrors[i]?.['joiningDate']">{{validateErrors[i]?.['joiningDate']}}</label>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Address</label>
               <input type="text" class="form-control" [(ngModel)]="member.address" name="address{{i}}" />
+              <label class="text-danger" *ngIf="validateErrors[i]?.['address']">{{validateErrors[i]?.['address']}}</label>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Email</label>
               <input type="email" class="form-control" [(ngModel)]="member.email" name="email{{i}}" />
+              <label class="text-danger" *ngIf="validateErrors[i]?.['email']">{{validateErrors[i]?.['email']}}</label>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Phone Number</label>
               <input type="text" class="form-control" [(ngModel)]="member.phoneNumber" name="phoneNumber{{i}}" />
+              <label class="text-danger" *ngIf="validateErrors[i]?.['phoneNumber']">{{validateErrors[i]?.['phoneNumber']}}</label>
             </div>
 
             <div class="col-md-6">
@@ -77,17 +90,20 @@
                 <option value="0" selected>Select Work Type</option>
                 <option *ngFor="let worktype of workTypes" [value]="worktype.id">{{worktype.workType}}</option>
               </select>
+              <label class="text-danger" *ngIf="validateErrors[i]?.['workType']">{{validateErrors[i]?.['workType']}}</label>
             </div>
 
             <ng-container *ngIf="member.workType == 2">
               <div class="col-md-6">
                 <label class="form-label">Job Name</label>
                 <input type="text" class="form-control" [(ngModel)]="member.jobName" name="jobName{{i}}" />
+                <label class="text-danger" *ngIf="validateErrors[i]?.['jobName']">{{validateErrors[i]?.['jobName']}}</label>
               </div>
 
               <div class="col-md-6">
                 <label class="form-label">Company Name</label>
                 <input type="text" class="form-control" [(ngModel)]="member.companyName" name="companyName{{i}}" />
+                <label class="text-danger" *ngIf="validateErrors[i]?.['companyName']">{{validateErrors[i]?.['companyName']}}</label>
               </div>
             </ng-container>
 
@@ -95,11 +111,13 @@
               <div class="col-md-6">
                 <label class="form-label">College Name</label>
                 <input type="text" class="form-control" [(ngModel)]="member.collegeName" name="collegeName{{i}}" />
+                <label class="text-danger" *ngIf="validateErrors[i]?.['collegeName']">{{validateErrors[i]?.['collegeName']}}</label>
               </div>
 
               <div class="col-md-6">
                 <label class="form-label">Course Name</label>
                 <input type="text" class="form-control" [(ngModel)]="member.courseName" name="courseName{{i}}" />
+                <label class="text-danger" *ngIf="validateErrors[i]?.['courseName']">{{validateErrors[i]?.['courseName']}}</label>
               </div>
             </ng-container>
           </div>
