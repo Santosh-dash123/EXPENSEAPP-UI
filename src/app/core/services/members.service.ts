@@ -13,8 +13,8 @@ export class MembersService {
 
   constructor(private http: HttpClient) {}
 
-  getAllMembers(roomOwnerId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/GetAllMembers/${roomOwnerId}`);
+  getAllMembers(roomOwnerId: number,WhichTypeDataGet: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/GetAllMembers/${roomOwnerId}/${WhichTypeDataGet}`);
   }
 
   addMembers(formData: FormData): Observable<any> {

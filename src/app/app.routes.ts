@@ -7,6 +7,7 @@ import { AdmindashboardComponent } from './dashboard/admindashboard/admindashboa
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { MemberMasterComponent } from './members/member-master/member-master.component';
 import { AddMembersModalComponent } from './members/add-members-modal/add-members-modal.component';
+import { ViewMembersComponent } from './members/view-members/view-members.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -19,6 +20,7 @@ export const routes: Routes = [
         { path: 'rooms/edit/:id', component: RoomFormComponent },
         { path: 'members', component: MemberMasterComponent },
         { path: 'members/add', component: AddMembersModalComponent },
+        { path: 'members/view/:id', component: ViewMembersComponent},
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
         ]
     },

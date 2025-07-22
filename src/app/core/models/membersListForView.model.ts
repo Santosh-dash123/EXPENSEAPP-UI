@@ -13,6 +13,7 @@ export interface MembersListForView {
   email?: string;
   phoneNumber?: string;
   workType?: number;
+  workTypeName?:string;
   jobName?: string;
   companyName?: string;
   status?: number;

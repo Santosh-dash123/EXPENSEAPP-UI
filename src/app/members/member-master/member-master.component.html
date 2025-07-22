@@ -15,6 +15,7 @@
         <th>Job/College Name</th>
         <th>Company/Course Name</th>
         <th>Room Name</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody *ngIf="membersList && membersList.length > 0; else noData">
@@ -23,7 +24,7 @@
         <td>{{ member.name }}</td>
         <td>
           <button class="btn btn-sm btn-info me-2" (click)="viewImage(member.profilePicture!)">
-              <i class="bi bi-eye"></i> View
+              <i class="bi bi-eye"></i> 
            </button>
         </td>
         <td>{{ member.gender }}</td>
@@ -32,6 +33,10 @@
         <td>{{ member.jobName }}</td>
         <td>{{ member.companyName }}</td>
         <td>{{ member.roomName }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="viewMember(member.id)">View</button> &nbsp;
+          <!-- <button class="btn btn-sm btn-danger" (click)="deleteRoom(room.id)">Delete</button> -->
+        </td>
       </tr>
     </tbody>
   </table>

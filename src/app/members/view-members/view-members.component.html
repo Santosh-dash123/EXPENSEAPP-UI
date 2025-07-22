@@ -1,0 +1,49 @@
+<div class="container mt-5" *ngIf="member">
+  <div class="card shadow p-4 d-flex flex-row align-items-center gap-4">
+    
+    <img
+      [src]="profileImageUrl"
+      alt="Profile Picture"
+      class="profile-img"
+    />
+
+    <div class="w-100" style="margin-left: 40px;">
+      <h4 class="mb-3">{{ member.name }}</h4>
+      <div class="row">
+        <div class="col-md-6 mb-2"><strong>Room:</strong> {{ member.roomName }}</div>
+        <div class="col-md-6 mb-2"><strong>Gender:</strong> {{ member.gender }}</div>
+        <div class="col-md-6 mb-2"><strong>Adhar:</strong>  
+            <button class="btn btn-sm btn-info me-2" (click)="viewImage(member.adharCard!)">
+              <i class="bi bi-eye"></i> 
+            </button>
+        </div>
+        <div class="col-md-6 mb-2"><strong>Father's Name:</strong> {{ member.fatherName }}</div>
+        <div class="col-md-6 mb-2"><strong>Joining Date:</strong> {{ member.joiningDate | date }}</div>
+        <div class="col-md-6 mb-2"><strong>Address:</strong> {{ member.address }}</div>
+        <div class="col-md-6 mb-2"><strong>Email:</strong> {{ member.email }}</div>
+        <div class="col-md-6 mb-2"><strong>Phone:</strong> {{ member.phoneNumber }}</div>
+        <div class="col-md-6 mb-2"><strong>Work Type:</strong> {{ member.workTypeName }}</div>
+        <div class="col-md-6 mb-2"><strong>Job/College:</strong> {{ member.jobName }}</div>
+        <div class="col-md-6 mb-2"><strong>Company/Course:</strong> {{ member.companyName }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Image View Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">Adhar Image</h5>
+        <button type="button" class="btn" data-dismiss="modal" aria-label="Close" style="margin-left: auto; background: none; border: none;">
+          <i class="bi bi-x-lg fs-5"></i>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <img [src]="selectedImageUrl" class="img-fluid" alt="Member Image">
+      </div>
+    </div>
+  </div>
+</div>

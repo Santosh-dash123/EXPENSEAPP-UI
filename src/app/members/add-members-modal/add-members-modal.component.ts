@@ -56,8 +56,6 @@ export class AddMembersModalComponent implements OnInit {
     if (!this.validateAllMembers()) {
       return; 
     }
-    const joiningDate = new Date();
-    const joiningDateFormat = joiningDate ? joiningDate.toISOString().split('T')[0] : '';
     this.members.push(this.getEmptyMember());
     this.validateErrors = [];
   }

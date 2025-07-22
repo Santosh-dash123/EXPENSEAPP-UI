@@ -35,7 +35,7 @@ export class MemberMasterComponent implements OnInit {
   }
 
   getAllMembers(): void {
-    this.memberService.getAllMembers(this.roomOwnerId).subscribe({
+    this.memberService.getAllMembers(this.roomOwnerId,'LIST').subscribe({
       next: (res) => {
         this.membersList = res.data;
       },
@@ -65,5 +65,10 @@ export class MemberMasterComponent implements OnInit {
     navigateToAddMembers()
     {
        this.router.navigate(['/admin/members/add']); //Directly Navigate To Add Members Form Component
+    }
+
+    viewMember(id:number): void
+    {
+      this.router.navigate(['/admin/members/view',id]); //View All Members Corresponding this member id
     }
 }
