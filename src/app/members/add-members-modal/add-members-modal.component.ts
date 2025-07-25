@@ -230,9 +230,10 @@ export class AddMembersModalComponent implements OnInit {
         } else {
           formData.append(`MemberData[${i}].${key}`, value ? value.toString() : '');
         }
-        formData.append(`MemberData[${i}].roomOwnerId`,this.roomOwnerId ? this.roomOwnerId.toString() : '');
       }
-      this.memberservice.addMembers(formData).subscribe({
+      formData.append(`MemberData[${i}].roomOwnerId`,this.roomOwnerId ? this.roomOwnerId.toString() : '');
+    });
+    this.memberservice.addMembers(formData).subscribe({
         next:(res)=>{
           Swal.fire('Success', res.statusMessage, 'success');
           this.router.navigate(['/admin/members']);
@@ -240,9 +241,12 @@ export class AddMembersModalComponent implements OnInit {
         error:(err)=>{
           Swal.fire('Error', err.statusMessage, 'error');
         }
-      })
-    });
+    })
 
-    console.log('FormData:', formData);
+    //For Find how many data bind in form data
+    // for(const pair of formData.entries())
+    // {
+    //   console.log(`${pair[0]} : ${pair[1]}`);
+    // }
   }
 }
